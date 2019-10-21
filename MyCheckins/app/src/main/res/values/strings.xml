@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MyCheckins</string>
+    <string name="app_bar_new">New</string>
+    <string name="checkin_title_hint">Enter a title for the check in.</string>
+    <string name="checkin_title_label">Title</string>
+    <string name="checkin_place_label">Place</string>
+    <string name="checkin_details_label">Details</string>
+    <string name="checkin_date_label">Date</string>
+    <string name="checkin_location_label">Location</string>
+    <string name="checkin_show_map_btn_label">Show Map</string>
+    <string name="checkin_take_pic_btn_label">Take Pic</string>
+    <string name="checkin_save_btn_label">Save</string>
+    <string name="checkin_share_btn_label">Share</string>
 </resources>
