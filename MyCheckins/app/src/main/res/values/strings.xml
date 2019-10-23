@@ -6,6 +6,7 @@
     <string name="checkin_place_label">Place</string>
     <string name="checkin_details_label">Details</string>
     <string name="checkin_date_label">Date</string>
+    <string name="date_picker_title">Checkin Date:</string>
     <string name="checkin_location_label">Location</string>
     <string name="checkin_show_map_btn_label">Show Map</string>
     <string name="checkin_take_pic_btn_label">Take Pic</string>
