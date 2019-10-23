@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 public class CheckinFragment extends Fragment {
     private Checkin mCheckin;
     private EditText mTitleField;
+    private Button mDateButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class CheckinFragment extends Fragment {
                 // This one too
             }
         });
+
+        mDateButton = v.findViewById(R.id.checkin_date);
+        mDateButton.setText(mCheckin.getDate().toString());
+        mDateButton.setEnabled(false);
 
         return v;
     }
