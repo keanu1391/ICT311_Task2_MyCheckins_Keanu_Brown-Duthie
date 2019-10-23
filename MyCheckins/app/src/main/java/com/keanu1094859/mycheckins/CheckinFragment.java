@@ -11,15 +11,30 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.UUID;
+
 public class CheckinFragment extends Fragment {
+
+    private static final String ARG_CHECKIN_ID = "checkin_id";
+
     private Checkin mCheckin;
     private EditText mTitleField;
     private Button mDateButton;
 
+    public static CheckinFragment newInstance(UUID checkinId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CHECKIN_ID, checkinId);
+
+        CheckinFragment fragment = new CheckinFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCheckin = new Checkin();
+        UUID checkinId = (UUID) getArguments().getSerializable(ARG_CHECKIN_ID);
+        mCheckin = MyCheckins.get(getActivity()).getCheckin(checkinId);
     }
 
     @Override
@@ -31,6 +46,7 @@ public class CheckinFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_checkin, container, false);
 
         mTitleField = v.findViewById(R.id.checkin_title);
+        mTitleField.setText(mCheckin.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
