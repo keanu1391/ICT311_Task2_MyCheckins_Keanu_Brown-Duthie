@@ -28,17 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/checkin_details_label" />
-
-    <EditText
-        android:id="@+id/checkin_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/checkin_date"
         android:layout_width="match_parent"
@@ -49,5 +38,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/share_checkin"/>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/checkin_details_label" />
+
+    <EditText
+        android:id="@+id/checkin_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

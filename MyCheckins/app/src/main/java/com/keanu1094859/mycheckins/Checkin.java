@@ -16,7 +16,11 @@ public class Checkin {
     private Float mLatitude;
 
     public Checkin() {
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public Checkin(UUID id) {
+        mId = id;
         mDate = new Date();
     }
 
@@ -28,7 +32,7 @@ public class Checkin {
         return mTitle;
     }
 
-    public void setmTitle(String title) {
+    public void setTitle(String title) {
         mTitle = title;
     }
 

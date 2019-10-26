@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_menu_add"
         android:title="@string/new_checkin"
         app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/help_checkin"
+        android:icon="@drawable/ic_menu_help"
+        android:title="@string/help_checkin"
+        app:showAsAction="ifRoom|withText" />
 </menu>

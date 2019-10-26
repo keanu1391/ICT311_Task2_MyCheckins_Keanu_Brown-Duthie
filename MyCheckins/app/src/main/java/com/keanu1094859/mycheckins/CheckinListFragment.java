@@ -1,6 +1,7 @@
 package com.keanu1094859.mycheckins;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,8 +59,13 @@ public class CheckinListFragment extends Fragment {
             case R.id.new_checkin:
                 Checkin checkin = new Checkin();
                 MyCheckins.get(getActivity()).addCheckin(checkin);
-                Intent intent = CheckinActivity.newIntent(getActivity(), checkin.getId());
-                startActivity(intent);
+                Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
+                startActivity(newIntent);
+                return true;
+            case R.id.help_checkin:
+//                * Get Working if time *
+//                Intent helpIntent = CheckinHelpActivity.newIntent();
+//                startActivity(helpIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -74,6 +80,7 @@ public class CheckinListFragment extends Fragment {
             mAdapter = new CheckinAdapter(checkins);
             mCheckinRecyclerView.setAdapter(mAdapter);
         } else {
+            mAdapter.setCheckins(checkins);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -83,6 +90,7 @@ public class CheckinListFragment extends Fragment {
 
         private Checkin mCheckin;
         private TextView mTitleTextView;
+        private TextView mPlaceTextView;
         private TextView mDateTextView;
 
         public CheckinHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -90,12 +98,14 @@ public class CheckinListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mTitleTextView = itemView.findViewById(R.id.checkin_title);
+            mPlaceTextView = itemView.findViewById(R.id.checkin_place);
             mDateTextView = itemView.findViewById(R.id.checkin_date);
         }
 
         public void bind(Checkin checkin) {
             mCheckin = checkin;
             mTitleTextView.setText(mCheckin.getTitle());
+            mPlaceTextView.setText(mCheckin.getPlace());
             mDateTextView.setText(mCheckin.getDate().toString());
         }
 
@@ -130,6 +140,10 @@ public class CheckinListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCheckins.size();
+        }
+
+        public void setCheckins(List<Checkin> checkins) {
+            mCheckins = checkins;
         }
     }
 }

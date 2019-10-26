@@ -9,12 +9,18 @@
         android:id="@+id/checkin_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Checkin Title" />
+        android:text="@string/checkin_title_label" />
+
+    <TextView
+        android:id="@+id/checkin_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/checkin_place_label" />
 
     <TextView
         android:id="@+id/checkin_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Checkin Date" />
+        android:text="@string/checkin_date_label" />
 
 </LinearLayout>

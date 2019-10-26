@@ -26,6 +26,8 @@ public class CheckinFragment extends Fragment {
 
     private Checkin mCheckin;
     private EditText mTitleField;
+    private EditText mPlaceField;
+    private EditText mDetailsField;
     private Button mDateButton;
 
     public static CheckinFragment newInstance(UUID checkinId) {
@@ -42,6 +44,14 @@ public class CheckinFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID checkinId = (UUID) getArguments().getSerializable(ARG_CHECKIN_ID);
         mCheckin = MyCheckins.get(getActivity()).getCheckin(checkinId);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        MyCheckins.get(getActivity())
+                .updateCheckin(mCheckin);
     }
 
     @Override
@@ -62,7 +72,45 @@ public class CheckinFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCheckin.setmTitle(s.toString());
+                mCheckin.setTitle(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // This one too
+            }
+        });
+
+        mPlaceField = v.findViewById(R.id.checkin_place);
+        mPlaceField.setText(mCheckin.getPlace());
+        mPlaceField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCheckin.setPlace(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // This one too
+            }
+        });
+
+        mDetailsField = v.findViewById(R.id.checkin_details);
+        mDetailsField.setText(mCheckin.getDetails());
+        mDetailsField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCheckin.setDetails(s.toString());
             }
 
             @Override
