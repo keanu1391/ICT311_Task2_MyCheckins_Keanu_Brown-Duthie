@@ -20,12 +20,10 @@ public class MyCheckins {
 
     private MyCheckins(Context context) {
         mCheckins = new ArrayList<>();
-        // remove later
-        for (int i = 0; i < 10; i++) {
-            Checkin checkin = new Checkin();
-            checkin.setmTitle("Checkin #" + i);
-            mCheckins.add(checkin);
-        }
+    }
+
+    public void addCheckin(Checkin c) {
+        mCheckins.add(c);
     }
 
     public List<Checkin> getCheckins() {
