@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,6 +29,7 @@ public class CheckinFragment extends Fragment {
     private EditText mTitleField;
     private EditText mPlaceField;
     private EditText mDetailsField;
+    private TextView mLocationView;
     private Button mDateButton;
 
     public static CheckinFragment newInstance(UUID checkinId) {
@@ -118,6 +120,9 @@ public class CheckinFragment extends Fragment {
                 // This one too
             }
         });
+
+        mLocationView = v.findViewById(R.id.checkin_location);
+        mLocationView.setText(mCheckin.getLocation());
 
         mDateButton = v.findViewById(R.id.checkin_date);
         updateDate();

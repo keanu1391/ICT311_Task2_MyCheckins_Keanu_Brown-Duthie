@@ -22,9 +22,9 @@ public class CheckinBaseHelper extends SQLiteOpenHelper {
                 CheckinTable.Cols.TITLE + ", " +
                 CheckinTable.Cols.DATE + ", " +
                 CheckinTable.Cols.PLACE + ", " +
-                CheckinTable.Cols.DETAILS +
-//                CheckinTable.Cols.LATITUDE + ", " +
-//                CheckinTable.Cols.LONGITUDE +
+                CheckinTable.Cols.DETAILS + ", " +
+                CheckinTable.Cols.LATITUDE + ", " +
+                CheckinTable.Cols.LONGITUDE +
                 ")"
         );
     }

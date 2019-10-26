@@ -12,16 +12,18 @@ public class Checkin {
     private String mDetails;
     private Date mDate;
     private Uri mImage;
-    private Float mLongitude;
-    private Float mLatitude;
+    private Double mLongitude;
+    private Double mLatitude;
 
-    public Checkin() {
-        this(UUID.randomUUID());
+    public Checkin(Double lat, Double lng) {
+        this(UUID.randomUUID(), lat, lng);
     }
 
-    public Checkin(UUID id) {
+    public Checkin(UUID id, Double lat, Double lng) {
         mId = id;
         mDate = new Date();
+        mLatitude = lat;
+        mLongitude = lng;
     }
 
     public UUID getId() {
@@ -60,27 +62,24 @@ public class Checkin {
         mDate = date;
     }
 
-    public Uri getImage() {
-        return mImage;
-    }
-
-    public void setImage(Uri imageUri) {
-        mImage = imageUri;
-    }
-
-    public Float getLongitude() {
+    public Double getLongitude() {
         return mLongitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         mLongitude = longitude;
     }
 
-    public Float getLatitude() {
+    public Double getLatitude() {
         return mLatitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(Double latitude) {
         mLatitude = latitude;
+    }
+
+    public String getLocation() {
+        return "Latitude: " + mLatitude.toString() +
+            "     Longitude: " + mLongitude.toString();
     }
 }

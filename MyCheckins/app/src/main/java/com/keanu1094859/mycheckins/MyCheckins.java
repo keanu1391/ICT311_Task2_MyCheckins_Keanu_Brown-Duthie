@@ -104,6 +104,8 @@ public class MyCheckins {
         values.put(CheckinTable.Cols.DETAILS, checkin.getDetails());
         values.put(CheckinTable.Cols.PLACE, checkin.getPlace());
         values.put(CheckinTable.Cols.DATE, checkin.getDate().getTime());
+        values.put(CheckinTable.Cols.LATITUDE, checkin.getLatitude());
+        values.put(CheckinTable.Cols.LONGITUDE, checkin.getLongitude());
 
         return values;
     }

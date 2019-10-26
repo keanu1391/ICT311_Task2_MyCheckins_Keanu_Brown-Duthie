@@ -2,6 +2,7 @@ package com.keanu1094859.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.net.Uri;
 
 import com.keanu1094859.database.CheckinDbSchema.CheckinTable;
 import com.keanu1094859.mycheckins.Checkin;
@@ -20,12 +21,16 @@ public class CheckinCursorWrapper extends CursorWrapper {
         String details = getString(getColumnIndex(CheckinTable.Cols.DETAILS));
         String place = getString(getColumnIndex(CheckinTable.Cols.PLACE));
         Long date = getLong(getColumnIndex(CheckinTable.Cols.DATE));
+        Double latitude = getDouble(getColumnIndex(CheckinTable.Cols.LATITUDE));
+        Double longitude = getDouble(getColumnIndex(CheckinTable.Cols.LONGITUDE));
 
-        Checkin checkin = new Checkin(UUID.fromString(uuidString));
+        Checkin checkin = new Checkin(UUID.fromString(uuidString), latitude, longitude);
         checkin.setTitle(title);
         checkin.setDetails(details);
         checkin.setPlace(place);
         checkin.setDate(new Date(date));
+        checkin.setLatitude(latitude);
+        checkin.setLongitude(longitude);
 
         return checkin;
     }

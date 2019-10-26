@@ -1,7 +1,10 @@
 package com.keanu1094859.mycheckins;
 
+import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,16 +18,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.List;
 
 public class CheckinListFragment extends Fragment {
 
     private RecyclerView mCheckinRecyclerView;
     private CheckinAdapter mAdapter;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         setHasOptionsMenu(true);
     }
 
@@ -54,18 +63,29 @@ public class CheckinListFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_checkin:
-                Checkin checkin = new Checkin();
-                MyCheckins.get(getActivity()).addCheckin(checkin);
-                Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
-                startActivity(newIntent);
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                Checkin checkin = null;
+
+                                if (location == null) {
+                                    checkin = new Checkin(0.0, 0.0);
+                                } else {
+                                    checkin = new Checkin(location.getLatitude(), location.getLongitude());
+                                }
+
+                                MyCheckins.get(getActivity()).addCheckin(checkin);
+                                Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
+                                startActivity(newIntent);
+                            }
+                        })
                 return true;
             case R.id.help_checkin:
-//                * Get Working if time *
-//                Intent helpIntent = CheckinHelpActivity.newIntent();
-//                startActivity(helpIntent);
+                // Add help web view here
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
