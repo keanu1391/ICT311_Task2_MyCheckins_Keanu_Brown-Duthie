@@ -1,6 +1,7 @@
 package com.keanu1094859.mycheckins;
 
 import android.net.Uri;
+import android.text.format.DateFormat;
 
 import java.util.Date;
 import java.util.UUID;
@@ -81,5 +82,15 @@ public class Checkin {
     public String getLocation() {
         return "Latitude: " + mLatitude.toString() +
             "     Longitude: " + mLongitude.toString();
+    }
+
+    public String getFormattedDate(String dateFormat) {
+        if (dateFormat == null) {
+            dateFormat = "EEE, d MMM yyyy";
+        }
+
+        String dateString = DateFormat.format(dateFormat, mDate).toString();
+
+        return dateString;
     }
 }

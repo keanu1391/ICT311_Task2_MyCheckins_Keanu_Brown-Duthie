@@ -3,8 +3,6 @@ package com.keanu1094859.mycheckins;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class CheckinListFragment extends Fragment {
 
@@ -33,7 +31,7 @@ public class CheckinListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
         setHasOptionsMenu(true);
     }
 
@@ -66,23 +64,18 @@ public class CheckinListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_checkin:
-                fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                Checkin checkin = null;
+                if (
+                    checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ) {
+//                    Add Error Toast here
+                } else {
+                    Checkin checkin = new Checkin(0.0, 0.0);
+                    MyCheckins.get(getActivity()).addCheckin(checkin);
+                    Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
+                    startActivity(newIntent);
+                }
 
-                                if (location == null) {
-                                    checkin = new Checkin(0.0, 0.0);
-                                } else {
-                                    checkin = new Checkin(location.getLatitude(), location.getLongitude());
-                                }
-
-                                MyCheckins.get(getActivity()).addCheckin(checkin);
-                                Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
-                                startActivity(newIntent);
-                            }
-                        })
                 return true;
             case R.id.help_checkin:
                 // Add help web view here
@@ -126,7 +119,7 @@ public class CheckinListFragment extends Fragment {
             mCheckin = checkin;
             mTitleTextView.setText(mCheckin.getTitle());
             mPlaceTextView.setText(mCheckin.getPlace());
-            mDateTextView.setText(mCheckin.getDate().toString());
+            mDateTextView.setText(mCheckin.getFormattedDate(null));
         }
 
         @Override

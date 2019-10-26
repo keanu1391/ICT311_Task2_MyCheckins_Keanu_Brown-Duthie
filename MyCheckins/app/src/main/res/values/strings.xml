@@ -12,4 +12,12 @@
     <string name="new_checkin">New Checkin</string>
     <string name="help_checkin">Help</string>
     <string name="date_picker_title">Checkin Date:</string>
+    <string name="checkin_summary">
+        %1$s!
+        %2$sDate: %3$s
+        %2$sPlace: %4$s
+        %2$sDetails: %5$s
+    </string>
+    <string name="checkin_summary_subject">MyCheckins Checkin Summary</string>
+    <string name="checkin_send_summary">Send Checkin Summary via</string>
 </resources>

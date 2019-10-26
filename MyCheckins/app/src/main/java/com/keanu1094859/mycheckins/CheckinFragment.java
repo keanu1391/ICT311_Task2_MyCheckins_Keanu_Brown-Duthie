@@ -1,10 +1,13 @@
 package com.keanu1094859.mycheckins;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.Date;
 import java.util.UUID;
+
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class CheckinFragment extends Fragment {
 
@@ -31,6 +36,7 @@ public class CheckinFragment extends Fragment {
     private EditText mDetailsField;
     private TextView mLocationView;
     private Button mDateButton;
+    private Button mShareButton;
 
     public static CheckinFragment newInstance(UUID checkinId) {
         Bundle args = new Bundle();
@@ -137,15 +143,29 @@ public class CheckinFragment extends Fragment {
             }
         });
 
+        mShareButton = v.findViewById(R.id.btn_share);
+        mShareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (
+                        checkSelfPermission(getActivity(),
+                                Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_TEXT, getCheckinSummary());
+                    i.putExtra(Intent.EXTRA_SUBJECT,
+                            getString(R.string.checkin_summary));
+                    i = Intent.createChooser(i, getString(R.string.checkin_send_summary));
+                    startActivity(i);
+                }
+            }
+        });
+
         return v;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != Activity.RESULT_OK) {
-            return;
-        }
-
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
@@ -155,6 +175,19 @@ public class CheckinFragment extends Fragment {
     }
 
     private void updateDate() {
-        mDateButton.setText(mCheckin.getDate().toString());
+        mDateButton.setText(mCheckin.getFormattedDate(null));
+    }
+
+    private String getCheckinSummary() {
+        String summary = getString(
+                R.string.checkin_summary,
+                mCheckin.getTitle(),
+                "\n",
+                mCheckin.getFormattedDate(null),
+                mCheckin.getPlace(),
+                mCheckin.getDetails()
+        );
+
+        return summary;
     }
 }
