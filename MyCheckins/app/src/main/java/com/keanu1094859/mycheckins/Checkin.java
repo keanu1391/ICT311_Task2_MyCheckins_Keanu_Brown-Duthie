@@ -12,7 +12,6 @@ public class Checkin {
     private String mPlace;
     private String mDetails;
     private Date mDate;
-    private Uri mImage;
     private Double mLongitude;
     private Double mLatitude;
 
@@ -92,5 +91,9 @@ public class Checkin {
         String dateString = DateFormat.format(dateFormat, mDate).toString();
 
         return dateString;
+    }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }

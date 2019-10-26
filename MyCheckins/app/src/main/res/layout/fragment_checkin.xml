@@ -5,17 +5,55 @@
     android:layout_margin="16dp"
     android:orientation="vertical">
 
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/checkin_title_label" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp">
 
-    <EditText
-        android:id="@+id/checkin_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/checkin_title_hint" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/checkin_photo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="center"
+                android:cropToPadding="true"
+                android:background="@android:color/darker_gray" />
+
+            <ImageButton
+                android:id="@+id/checkin_camera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_camera" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/checkin_title_label" />
+
+            <EditText
+                android:id="@+id/checkin_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/checkin_title_hint" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         style="?android:listSeparatorTextViewStyle"

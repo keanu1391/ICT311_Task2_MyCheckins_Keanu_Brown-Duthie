@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.keanu1094859.mycheckins">
 
+    <uses-feature android:name="android.hardware.camera2"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -25,5 +28,14 @@
         <activity
             android:name=".CheckinActivity"
             android:parentActivityName=".CheckinListActivity" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.keanu1094859.mycheckins.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files" />
+        </provider>
     </application>
 </manifest>

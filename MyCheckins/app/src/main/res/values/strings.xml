@@ -7,7 +7,6 @@
     <string name="checkin_details_label">Details:</string>
     <string name="checkin_location_label">Location</string>
     <string name="checkin_show_map_btn_label">Show Map</string>
-    <string name="checkin_take_pic_btn_label">Take Pic</string>
     <string name="share_checkin">Share</string>
     <string name="new_checkin">New Checkin</string>
     <string name="help_checkin">Help</string>

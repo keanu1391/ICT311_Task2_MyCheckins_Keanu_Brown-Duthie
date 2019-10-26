@@ -9,6 +9,7 @@ import com.keanu1094859.database.CheckinBaseHelper;
 import com.keanu1094859.database.CheckinCursorWrapper;
 import com.keanu1094859.database.CheckinDbSchema.CheckinTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -72,6 +73,11 @@ public class MyCheckins {
         } finally {
             cursor.close();
         }
+    }
+
+    public File getPhotoFile(Checkin checkin) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, checkin.getPhotoFilename());
     }
 
     public void updateCheckin(Checkin checkin) {
