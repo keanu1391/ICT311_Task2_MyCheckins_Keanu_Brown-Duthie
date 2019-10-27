@@ -30,8 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-
 public class CheckinFragment extends Fragment {
 
     private static final String ARG_CHECKIN_ID = "checkin_id";
@@ -162,18 +160,13 @@ public class CheckinFragment extends Fragment {
         mShareButton = v.findViewById(R.id.btn_share);
         mShareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (
-                        checkSelfPermission(getActivity(),
-                                Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_TEXT, getCheckinSummary());
-                    i.putExtra(Intent.EXTRA_SUBJECT,
-                            getString(R.string.checkin_summary));
-                    i = Intent.createChooser(i, getString(R.string.checkin_send_summary));
-                    startActivity(i);
-                }
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getCheckinSummary());
+                i.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.checkin_summary));
+                i = Intent.createChooser(i, getString(R.string.checkin_send_summary));
+                startActivity(i);
             }
         });
 

@@ -1,11 +1,7 @@
 package com.keanu1094859.mycheckins;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,17 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -32,10 +20,6 @@ public class CheckinListFragment extends Fragment {
 
     private RecyclerView mCheckinRecyclerView;
     private CheckinAdapter mAdapter;
-    private Location mLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
-
-    private static final int REQUEST_CODE = 101;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
