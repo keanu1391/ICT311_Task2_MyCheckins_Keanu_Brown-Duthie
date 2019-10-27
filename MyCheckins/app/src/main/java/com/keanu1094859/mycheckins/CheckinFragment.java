@@ -1,6 +1,7 @@
 package com.keanu1094859.mycheckins;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ public class CheckinFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
 
     private static final int REQUEST_DATE = 0;
-    private static final int REQUEST_PHOTO = 1;
+    private static final int REQUEST_PHOTO = 2;
 
     private Checkin mCheckin;
     private File mPhotoFile;
@@ -202,6 +204,7 @@ public class CheckinFragment extends Fragment {
                 startActivityForResult(captureImage, REQUEST_PHOTO);
             }
         });
+
         mPhotoView = v.findViewById(R.id.checkin_photo);
         updatePhotoView();
 
@@ -210,6 +213,12 @@ public class CheckinFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("result:", requestCode + "");
+        Log.d("result:", Activity.RESULT_OK + "");
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
@@ -217,7 +226,7 @@ public class CheckinFragment extends Fragment {
             updateDate();
         } else if (requestCode == REQUEST_PHOTO) {
             Uri uri = FileProvider.getUriForFile(getActivity(),
-                    "com.keanu1094859.mycheckina.fileprovider",
+                    "com.keanu1094859.mycheckins.fileprovider",
                     mPhotoFile);
 
             getActivity().revokeUriPermission(uri,
