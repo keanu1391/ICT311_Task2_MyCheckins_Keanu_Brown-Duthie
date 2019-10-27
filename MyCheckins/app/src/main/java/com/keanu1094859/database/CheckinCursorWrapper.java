@@ -2,7 +2,6 @@ package com.keanu1094859.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.net.Uri;
 
 import com.keanu1094859.database.CheckinDbSchema.CheckinTable;
 import com.keanu1094859.mycheckins.Checkin;

@@ -6,8 +6,7 @@
     <uses-feature android:name="android.hardware.camera2"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 1
     <application

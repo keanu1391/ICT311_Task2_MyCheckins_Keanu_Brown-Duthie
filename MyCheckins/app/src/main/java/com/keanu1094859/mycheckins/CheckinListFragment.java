@@ -16,8 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-
 import java.util.List;
 
 import static androidx.core.content.ContextCompat.checkSelfPermission;
@@ -26,12 +24,10 @@ public class CheckinListFragment extends Fragment {
 
     private RecyclerView mCheckinRecyclerView;
     private CheckinAdapter mAdapter;
-    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
         setHasOptionsMenu(true);
     }
 
@@ -64,17 +60,10 @@ public class CheckinListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_checkin:
-                if (
-                    checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                ) {
-//                    Add Error Toast here
-                } else {
-                    Checkin checkin = new Checkin(0.0, 0.0);
-                    MyCheckins.get(getActivity()).addCheckin(checkin);
-                    Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
-                    startActivity(newIntent);
-                }
+                Checkin checkin = new Checkin(0.0, 0.0);
+                MyCheckins.get(getActivity()).addCheckin(checkin);
+                Intent newIntent = CheckinActivity.newIntent(getActivity(), checkin.getId());
+                startActivity(newIntent);
 
                 return true;
             case R.id.help_checkin:
