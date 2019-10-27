@@ -51,6 +51,7 @@ public class CheckinFragment extends Fragment {
     private Button mShareButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+    private Button mDeleteButton;
 
     public static CheckinFragment newInstance(UUID checkinId) {
         Bundle args = new Bundle();
@@ -208,6 +209,14 @@ public class CheckinFragment extends Fragment {
 
         mPhotoView = v.findViewById(R.id.checkin_photo);
         updatePhotoView();
+
+        mDeleteButton = v.findViewById(R.id.btn_delete);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MyCheckins.get(getActivity()).deleteCheckIn(mCheckin.getId());
+                getActivity().finish();
+            }
+        });
 
         return v;
     }

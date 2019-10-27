@@ -8,6 +8,7 @@
     <string name="checkin_location_label">Location</string>
     <string name="checkin_show_map_btn_label">Show Map</string>
     <string name="share_checkin">Share</string>
+    <string name="delete_checkin">Delete</string>
     <string name="new_checkin">New Checkin</string>
     <string name="help_checkin">Help</string>
     <string name="date_picker_title">Checkin Date:</string>
