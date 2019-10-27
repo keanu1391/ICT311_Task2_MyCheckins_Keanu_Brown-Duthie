@@ -23,7 +23,7 @@ public class CheckinCursorWrapper extends CursorWrapper {
         Double latitude = getDouble(getColumnIndex(CheckinTable.Cols.LATITUDE));
         Double longitude = getDouble(getColumnIndex(CheckinTable.Cols.LONGITUDE));
 
-        Checkin checkin = new Checkin(UUID.fromString(uuidString), latitude, longitude);
+        Checkin checkin = new Checkin(UUID.fromString(uuidString));
         checkin.setTitle(title);
         checkin.setDetails(details);
         checkin.setPlace(place);

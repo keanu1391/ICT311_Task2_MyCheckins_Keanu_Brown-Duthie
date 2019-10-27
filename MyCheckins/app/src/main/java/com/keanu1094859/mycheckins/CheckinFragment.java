@@ -46,6 +46,7 @@ public class CheckinFragment extends Fragment {
     private EditText mPlaceField;
     private EditText mDetailsField;
     private TextView mLocationView;
+    private Button mShowLocationButton;
     private Button mDateButton;
     private Button mShareButton;
     private ImageButton mPhotoButton;

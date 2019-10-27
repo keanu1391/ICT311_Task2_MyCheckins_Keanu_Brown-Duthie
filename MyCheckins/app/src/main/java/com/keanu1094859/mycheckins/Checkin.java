@@ -15,15 +15,13 @@ public class Checkin {
     private Double mLongitude;
     private Double mLatitude;
 
-    public Checkin(Double lat, Double lng) {
-        this(UUID.randomUUID(), lat, lng);
+    public Checkin() {
+        this(UUID.randomUUID());
     }
 
-    public Checkin(UUID id, Double lat, Double lng) {
+    public Checkin(UUID id) {
         mId = id;
         mDate = new Date();
-        mLatitude = lat;
-        mLongitude = lng;
     }
 
     public UUID getId() {
