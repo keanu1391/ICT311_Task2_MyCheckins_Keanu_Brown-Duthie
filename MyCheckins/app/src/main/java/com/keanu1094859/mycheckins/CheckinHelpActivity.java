@@ -9,9 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CheckinHelpActivity extends AppCompatActivity {
-
-    private static final String CHECKIN_HELP_LINK =
-            "https://www.wikihow.com/Check-In-on-Facebook";
+    private static final String CHECKIN_HELP_LINK = "https://www.wikihow.com/Check-In-on-Facebook";
 
     private WebView mWebView;
     private TextView mLinkView;
@@ -19,14 +17,18 @@ public class CheckinHelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_checkin_help);
 
         mWebView = findViewById(R.id.checkin_help);
         mWebView.setWebViewClient(new WebViewClient(){
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
                 return false;
             }
+
         });
         mWebView.loadUrl(CHECKIN_HELP_LINK);
 

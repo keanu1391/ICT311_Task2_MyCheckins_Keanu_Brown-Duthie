@@ -17,10 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends DialogFragment {
-
-    public static final String EXTRA_DATE =
-            "com.keanu1094859.mycheckins.date";
-
+    public static final String EXTRA_DATE = "com.keanu1094859.mycheckins.date";
     private static final String ARG_DATE = "date";
 
     private DatePicker mDatePicker;
@@ -31,6 +28,7 @@ public class DatePickerFragment extends DialogFragment {
 
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -40,6 +38,7 @@ public class DatePickerFragment extends DialogFragment {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -69,6 +68,7 @@ public class DatePickerFragment extends DialogFragment {
 
     private void sendResult(int resultCode, Date date) {
         if (getTargetFragment() == null) {
+
             return;
         }
 

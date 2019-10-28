@@ -20,7 +20,5 @@
     </string>
     <string name="checkin_summary_subject">MyCheckins Checkin Summary</string>
     <string name="checkin_send_summary">Send Checkin Summary via</string>
-    <string name="map_key" translatable="false">
-        AIzaSyBVtpBcTuw072wHaqnIFmd4an6O5g9ZVAM
-    </string>
+    <string name="map_key" translatable="false">AIzaSyCDhlnQ4XeSnvID_xvEPXv4ZjVsvmp4wrI</string>
 </resources>

@@ -29,13 +29,11 @@ public class MyCheckins {
 
     private MyCheckins(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new CheckinBaseHelper(mContext)
-                .getWritableDatabase();
+        mDatabase = new CheckinBaseHelper(mContext).getWritableDatabase();
     }
 
     public void addCheckin(Checkin c) {
         ContentValues values = getContentValues(c);
-
         mDatabase.insert(CheckinTable.NAME, null, values);
     }
 
@@ -49,11 +47,11 @@ public class MyCheckins {
 
     public List<Checkin> getCheckins() {
         List<Checkin> checkins = new ArrayList<>();
-
         CheckinCursorWrapper cursor = queryCheckins(null, null);
 
         try {
             cursor.moveToFirst();
+
             while (!cursor.isAfterLast()) {
                 checkins.add(cursor.getCheckin());
                 cursor.moveToNext();
@@ -77,6 +75,7 @@ public class MyCheckins {
             }
 
             cursor.moveToFirst();
+
             return cursor.getCheckin();
         } finally {
             cursor.close();
@@ -85,6 +84,7 @@ public class MyCheckins {
 
     public File getPhotoFile(Checkin checkin) {
         File filesDir = mContext.getFilesDir();
+
         return new File(filesDir, checkin.getPhotoFilename());
     }
 

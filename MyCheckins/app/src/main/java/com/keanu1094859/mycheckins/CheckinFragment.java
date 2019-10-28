@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,11 +22,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.File;
+
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,22 +44,32 @@ public class CheckinFragment extends Fragment {
 
     private static final String ARG_CHECKIN_ID = "checkin_id";
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String[] LOCATION_PERMISSIONS = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,};
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
+    private static final int REQUEST_PERMISSIONS = 0;
 
     private Checkin mCheckin;
     private File mPhotoFile;
+
     private EditText mTitleField;
     private EditText mPlaceField;
     private EditText mDetailsField;
     private TextView mLocationView;
-    private Button mShowLocationButton;
-    private Button mDateButton;
-    private Button mShareButton;
+
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+
+    private Button mDateButton;
+    private Button mShareButton;
+    private Button mShowMapButton;
     private Button mDeleteButton;
+
+    private GoogleApiClient mGoogleApiClient;
+    public LocationListener mLocationListener;
 
     public static CheckinFragment newInstance(UUID checkinId) {
         Bundle args = new Bundle();
@@ -63,17 +83,77 @@ public class CheckinFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
         UUID checkinId = (UUID) getArguments().getSerializable(ARG_CHECKIN_ID);
+
         mCheckin = MyCheckins.get(getActivity()).getCheckin(checkinId);
         mPhotoFile = MyCheckins.get(getActivity()).getPhotoFile(mCheckin);
+        mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mCheckin.setLatitude(location.getLatitude());
+                mCheckin.setLongitude(location.getLongitude());
+                mLocationView.setText(
+                        String.format(
+                                "Latitude: %s     Longitude: %s",
+                                mCheckin.getLatitude(),
+                                mCheckin.getLongitude()
+                        )
+                );
+            }
+        };
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+
+                    @Override
+                    public void onConnected(@Nullable final Bundle bundle) {
+                        final LocationRequest request = LocationRequest.create();
+
+                        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                        request.setNumUpdates(1);
+                        request.setInterval(0);
+                        requestPermissions(LOCATION_PERMISSIONS, REQUEST_PERMISSIONS);
+
+                        if (ContextCompat.checkSelfPermission(
+                                getActivity(), Manifest.permission.ACCESS_FINE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED) {
+
+                            return;
+                        }
+
+                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, request, mLocationListener);
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) { }
+
+                })
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mGoogleApiClient.connect();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        mGoogleApiClient.disconnect();
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        MyCheckins.get(getActivity())
-                .updateCheckin(mCheckin);
+        MyCheckins.get(getActivity()).updateCheckin(mCheckin);
     }
 
     @Override
@@ -141,17 +221,13 @@ public class CheckinFragment extends Fragment {
             }
         });
 
-        mLocationView = v.findViewById(R.id.checkin_location);
-        mLocationView.setText(mCheckin.getLocation());
-
         mDateButton = v.findViewById(R.id.checkin_date);
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment
-                        .newInstance(mCheckin.getDate());
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mCheckin.getDate());
                 dialog.setTargetFragment(CheckinFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
@@ -203,6 +279,23 @@ public class CheckinFragment extends Fragment {
         mPhotoView = v.findViewById(R.id.checkin_photo);
         updatePhotoView();
 
+        mLocationView = v.findViewById(R.id.checkin_location);
+
+        final Intent showMap = new Intent(getActivity(), CheckinMapsActivity.class);
+        mShowMapButton = v.findViewById(R.id.btn_show_map);
+        mShowMapButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showMap.putExtra("Latitude", mCheckin.getLatitude());
+                showMap.putExtra("Longitude", mCheckin.getLongitude());
+                startActivity(showMap);
+            }
+        });
+
+        if (packageManager.resolveActivity(showMap,
+                PackageManager.MATCH_DEFAULT_ONLY) == null) {
+            mShowMapButton.setEnabled(false);
+        }
+
         mDeleteButton = v.findViewById(R.id.btn_delete);
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -216,9 +309,8 @@ public class CheckinFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("result:", requestCode + "");
-        Log.d("result:", Activity.RESULT_OK + "");
         if (resultCode != Activity.RESULT_OK) {
+
             return;
         }
 
@@ -260,8 +352,7 @@ public class CheckinFragment extends Fragment {
         if (mPhotoFile == null || !mPhotoFile.exists()) {
             mPhotoView.setImageDrawable(null);
         } else {
-            Bitmap bitmap = PictureUtils.getScaledBitmap(
-                    mPhotoFile.getPath(), getActivity());
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
             mPhotoView.setImageBitmap(bitmap);
         }
     }

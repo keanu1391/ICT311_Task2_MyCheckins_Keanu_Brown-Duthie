@@ -6,6 +6,7 @@ public class CheckinListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
+
         return new CheckinListFragment();
     }
 }

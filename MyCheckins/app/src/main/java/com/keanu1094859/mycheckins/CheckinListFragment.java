@@ -24,13 +24,17 @@ public class CheckinListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_checkin_list, container, false);
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
+    ) {
+        View view = inflater.inflate(
+                R.layout.fragment_checkin_list, container, false
+        );
 
         mCheckinRecyclerView = view.findViewById(R.id.checkin_recycler_view);
         mCheckinRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -43,12 +47,14 @@ public class CheckinListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         updateUI();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.fragment_checkin_list, menu);
     }
 
@@ -68,6 +74,7 @@ public class CheckinListFragment extends Fragment {
 
                 return true;
             default:
+
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -95,6 +102,7 @@ public class CheckinListFragment extends Fragment {
 
         public CheckinHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_checkin, parent, false));
+
             itemView.setOnClickListener(this);
 
             mTitleTextView = itemView.findViewById(R.id.checkin_title);

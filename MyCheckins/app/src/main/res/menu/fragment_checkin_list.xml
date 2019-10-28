@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/new_checkin"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/new_checkin"
         app:showAsAction="ifRoom|withText" />
+
     <item
         android:id="@+id/help_checkin"
         android:icon="@drawable/ic_menu_help"
         android:title="@string/help_checkin"
         app:showAsAction="ifRoom|withText" />
+
 </menu>

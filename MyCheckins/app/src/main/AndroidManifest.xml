@@ -6,8 +6,12 @@
     <uses-feature android:name="android.hardware.camera2"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-1
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,26 +24,36 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
+
         <activity android:name=".CheckinListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".CheckinActivity"
             android:parentActivityName=".CheckinListActivity" />
+
         <activity
             android:name=".CheckinHelpActivity"
             android:parentActivityName=".CheckinListActivity" />
+
+        <activity
+            android:name=".CheckinMapsActivity"
+            android:parentActivityName=".CheckinActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.keanu1094859.mycheckins.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files" />
+
         </provider>
     </application>
 </manifest>
